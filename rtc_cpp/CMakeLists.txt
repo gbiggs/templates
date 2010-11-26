@@ -27,6 +27,8 @@ COMPILE_IDL_FILES(${PROJECT_SOURCE_DIR}/idl ${idls})
 FILTER_LIST("${_idl_srcs}" "hh$" _installable_idl_srcs)
 install(FILES ${_installable_idl_srcs}
     DESTINATION ${RTC_INCLUDE_INSTALL_DIR}/idl COMPONENT headers)
+INSTALL_IDL_FILES(${PROJECT_SOURCE_DIR}/idl ${RTC_INCLUDE_INSTALL_DIR}/idl
+    ${idls})
 
 # Get necessary dependency information
 GET_PKG_CONFIG_INFO(openrtm-aist REQUIRED)
