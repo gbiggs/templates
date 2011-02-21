@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+erlc +"{light_ifr,true}" +this +handle_info +"{be, erl_template}" $@
+

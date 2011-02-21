@@ -4,7 +4,7 @@
 
 '''<Project>
 
-Copyright (C) 2010
+Copyright (C) 2011
     Geoffrey Biggs
     RT-Synthesis Research Group
     Intelligent Systems Research Institute,
