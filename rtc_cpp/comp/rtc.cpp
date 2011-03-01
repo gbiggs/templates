@@ -38,10 +38,10 @@ RTC::ReturnCode_t RTC::onInitialize()
         m_properties.getProperty("configuration.active_config", "default");
     m_configsets.update(active_set.c_str());*/
 
-    comp.addInPort(_port_.getName(), _port_);
-    comp.addOutPort(_port_.getName(), _port_);
+    addInPort(_port_.getName(), _port_);
+    addOutPort(_port_.getName(), _port_);
     //svc_port_.registerProvider("<INSTANCE_NAME>", "<TYPE_NAME>", svc_prov_);
-    //comp.addPort(svc_port_);
+    //addPort(svc_port_);
 
     return RTC::RTC_OK;
 }
