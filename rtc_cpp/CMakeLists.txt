@@ -33,11 +33,12 @@ INSTALL_IDL_FILES(${PROJECT_SOURCE_DIR}/idl ${RTC_INCLUDE_INSTALL_DIR}/idl
 # Get necessary dependency information
 GET_PKG_CONFIG_INFO(openrtm-aist REQUIRED)
 
-# Component target
+# Set include and link directories and flags
 include_directories(${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 APPLY_PKG_CONFIG_DIRS(openrtm-aist)
 APPLY_PKG_CONFIG_TO_SRCS(openrtm-aist ${comp_srcs} ${proxy_srcs})
 
+# Component target
 add_library(rtc SHARED ${comp_srcs} ${proxy_srcs} ${_idl_srcs})
 add_executable(rtc_standalone ${standalone_srcs})
 
