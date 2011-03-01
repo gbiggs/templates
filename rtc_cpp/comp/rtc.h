@@ -24,8 +24,6 @@
 //#include <rtm/CorbaPort.h>
 //#include "service_impl.h"
 
-using namespace RTC;
-
 
 // Base exception
 class BaseRTCError : public std::runtime_error
@@ -51,10 +49,10 @@ class RTC
         //virtual RTC::ReturnCode_t onExecute(RTC::UniqueId ec_id);
 
     private:
-        RTC:: _;
-        RTC::InPort<RTC::> _port_;
-        RTC:: _;
-        RTC::OutPort<RTC::> _port_;
+        //RTC:: _;
+        //RTC::InPort<RTC::> _port_;
+        //RTC:: _;
+        //RTC::OutPort<RTC::> _port_;
         //ServiceProvider svc_prov_;
         //RTC::CorbaPort svc_port_;
 };
