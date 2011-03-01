@@ -131,6 +131,39 @@ macro(GET_PKG_CONFIG_INFO _pkg _required)
 endmacro(GET_PKG_CONFIG_INFO)
 
 
+macro(APPLY_PKG_CONFIG_DIRS _pkg)
+    if(${_pkg}_INCLUDE_DIRS)
+        include_directories(${${_pkg}_INCLUDE_DIRS})
+    endif(${_pkg}_INCLUDE_DIRS)
+    if(${_pkg}_LIBRARY_DIRS)
+        link_directories(${${_pkg}_LIBRARY_DIRS})
+    endif(${_pkg}_LIBRARY_DIRS)
+endmacro(APPLY_PKG_CONFIG_DIRS)
+
+
+macro(APPLY_PKG_CONFIG_TO_TGTS _pkg)
+    if(${_pkg}_LINK_FLAGS)
+        foreach(_tgt ${ARGN})
+            set_target_properties(${_tgt} PROPERTIES
+                LINK_FLAGS "${${_pkg}_LINK_FLAGS}")
+        endforeach(_arg)
+    endif(${_pkg}_LINK_FLAGS)
+    if(${_pkg}_LINK_LIBS)
+        foreach(_tgt ${ARGN})
+            target_link_libraries(${_tgt} ${${_pkg}_LINK_LIBS})
+        endforeach(_arg)
+    endif(${_pkg}_LINK_LIBS)
+endmacro(APPLY_PKG_CONFIG_TO_TGTS)
+
+
+macro(APPLY_PKG_CONFIG_TO_SRCS _pkg)
+    if(${_pkg}_CFLAGS)
+        set_source_files_properties(${ARGN}
+            PROPERTIES COMPILE_FLAGS "${${_pkg}_CFLAGS}")
+    endif(${_pkg}_CFLAGS)
+endmacro(APPLY_PKG_CONFIG_TO_SRCS)
+
+
 macro(GET_OS_INFO)
     if(WIN32)
         message(FATAL_ERROR "This component does not support Windows.")

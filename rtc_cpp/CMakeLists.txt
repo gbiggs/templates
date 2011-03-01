@@ -35,28 +35,14 @@ GET_PKG_CONFIG_INFO(openrtm-aist REQUIRED)
 
 # Component target
 include_directories(${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
-if(openrtm-aist_INCLUDE_DIRS)
-    include_directories(${openrtm-aist_INCLUDE_DIRS})
-endif(openrtm-aist_INCLUDE_DIRS)
-if(openrtm-aist_LIBRARY_DIRS)
-    link_directories(${openrtm-aist_LIBRARY_DIRS})
-endif(openrtm-aist_LIBRARY_DIRS)
-if(openrtm-aist_CFLAGS)
-    set_source_files_properties(${comp_srcs} ${proxy_srcs}
-        PROPERTIES COMPILE_FLAGS "${openrtm-aist_CFLAGS}")
-endif(openrtm-aist_CFLAGS)
+APPLY_PKG_CONFIG_DIRS(openrtm-aist)
+APPLY_PKG_CONFIG_TO_SRCS(openrtm-aist ${comp_srcs} ${proxy_srcs})
 
 add_library(rtc SHARED ${comp_srcs} ${proxy_srcs} ${_idl_srcs})
 add_executable(rtc_standalone ${standalone_srcs})
 
 target_link_libraries(rtc_standalone rtc)
-if(openrtm-aist_LINK_FLAGS)
-    set_target_properties(rtc PROPERTIES
-        LINK_FLAGS "${openrtm-aist_LINK_FLAGS}")
-endif(openrtm-aist_LINK_FLAGS)
-if(openrtm-aist_LINK_LIBS)
-    target_link_libraries(rtc ${openrtm-aist_LINK_LIBS})
-endif(openrtm-aist_LINK_LIBS)
+APPLY_PKG_CONFIG_TO_TGTS(openrtm-aist rtc)
 
 install(TARGETS rtc LIBRARY DESTINATION ${RTC_LIB_INSTALL_DIR}
     COMPONENT component)
