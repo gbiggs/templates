@@ -65,5 +65,5 @@ set(RTC_EXECUTABLES "rtc__standalone" "RTC:")
 configure_file("${PROJECT_SOURCE_DIR}/cmake/cpack_options.cmake.in"
     "${PROJECT_BINARY_DIR}/cpack_options.cmake" @ONLY)
 set(CPACK_PROJECT_CONFIG_FILE "${PROJECT_BINARY_DIR}/cpack_options.cmake")
-include(cpack)
+include(CPack)
 
