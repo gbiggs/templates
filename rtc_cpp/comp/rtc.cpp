@@ -39,9 +39,18 @@ RTC::ReturnCode_t RTC::onInitialize()
     m_configsets.update(active_set.c_str());*/
 
     addInPort(_port_.getName(), _port_);
+#if defined(RTDOC_SUPPORT)
+    //_port_.addProperty("description", "");
+#endif //defined(RTDOC_SUPPORT)
     addOutPort(_port_.getName(), _port_);
+#if defined(RTDOC_SUPPORT)
+    //_port_.addProperty("description", "");
+#endif //defined(RTDOC_SUPPORT)
     //svc_port_.registerProvider("<INSTANCE_NAME>", "<TYPE_NAME>", svc_prov_);
     //addPort(svc_port_);
+#if defined(RTDOC_SUPPORT)
+    //svc_port_.addProperty("description", "");
+#endif //defined(RTDOC_SUPPORT)
 
     return RTC::RTC_OK;
 }
@@ -86,10 +95,28 @@ static const char* spec[] =
     "language",          "C++",
     "lang_type",         "compile",
     // Configuration variables
+    //"conf.default.", "",
+#if defined(RTDOC_SUPPORT)
+    //"conf.__description__.", "",
+#endif //defined(RTDOC_SUPPORT)
     // Widget
     //"conf.__widget__.", "text",
     //"conf.__widget__.", "spin",
     // Constraints
+    //"conf.__constraints__.", "0<=x<=100",
+    // Documentation
+#if defined(RTDOC_SUPPORT)
+    //"conf.__doc__.__order__", "",
+    //"conf.__doc__.__license__", "",
+    //"conf.__doc__.__contact__", "",
+    //"conf.__doc__.__url__", "",
+    //"conf.__doc__.intro", "",
+    //"conf.__doc__.reqs", "",
+    //"conf.__doc__.install", "",
+    //"conf.__doc__.usage", "",
+    //"conf.__doc__.misc", "",
+    //"conf.__doc__.changelog", "",
+#endif //defined(RTDOC_SUPPORT)
     ""
 };
 

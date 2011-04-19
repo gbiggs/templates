@@ -16,6 +16,13 @@ CONFIGURE_FILE ("${PROJECT_SOURCE_DIR}/cmake/uninstall_target.cmake.in"
 ADD_CUSTOM_TARGET (uninstall "${CMAKE_COMMAND}" -P
     "${PROJECT_BINARY_DIR}/uninstall_target.cmake")
 
+# Option to enable/disable rtdoc support
+option(RTDOC_SUPPORT
+    "Enable support for rtdoc. This will increase component size." ON)
+if(RTDOC_SUPPORT)
+    add_definitions("-DRTDOC_SUPPORT")
+endif(RTDOC_SUPPORT)
+
 # Component source files
 set(comp_srcs comp/rtc.cpp
               comp/service_impl.cpp)
@@ -39,15 +46,16 @@ APPLY_PKG_CONFIG_DIRS(openrtm-aist)
 APPLY_PKG_CONFIG_TO_SRCS(openrtm-aist ${comp_srcs} ${proxy_srcs})
 
 # Component target
-add_library(rtc SHARED ${comp_srcs} ${proxy_srcs} ${_idl_srcs})
-add_executable(rtc_standalone ${standalone_srcs})
+add_library(${PROJECT_NAME_LOWER} SHARED
+    ${comp_srcs} ${proxy_srcs} ${_idl_srcs})
+add_executable(${PROJECT_NAME_LOWER}_standalone ${standalone_srcs})
 
-target_link_libraries(rtc_standalone rtc)
-APPLY_PKG_CONFIG_TO_TGTS(openrtm-aist rtc)
+target_link_libraries(${PROJECT_NAME_LOWER}_standalone ${PROJECT_NAME_LOWER})
+APPLY_PKG_CONFIG_TO_TGTS(openrtm-aist ${PROJECT_NAME_LOWER})
 
-install(TARGETS rtc LIBRARY DESTINATION ${RTC_LIB_INSTALL_DIR}
-    COMPONENT component)
-install(TARGETS rtc_standalone RUNTIME DESTINATION bin
+install(TARGETS ${PROJECT_NAME_LOWER} LIBRARY DESTINATION
+    ${RTC_LIB_INSTALL_DIR} COMPONENT component)
+install(TARGETS ${PROJECT_NAME_LOWER}_standalone RUNTIME DESTINATION bin
     COMPONENT component)
 
 # Subdirectories
@@ -61,7 +69,7 @@ add_subdirectory(idl)
 include(InstallRequiredSystemLibraries)
 set(RTC_DESCRIPTION "RT-Component for .")
 set(RTC_VENDOR "Geoffrey Biggs, AIST")
-set(RTC_EXECUTABLES "rtc__standalone" "RTC:")
+set(RTC_EXECUTABLES "${PROJECT_NAME_LOWER}_standalone" "RTC:")
 configure_file("${PROJECT_SOURCE_DIR}/cmake/cpack_options.cmake.in"
     "${PROJECT_BINARY_DIR}/cpack_options.cmake" @ONLY)
 set(CPACK_PROJECT_CONFIG_FILE "${PROJECT_BINARY_DIR}/cpack_options.cmake")
