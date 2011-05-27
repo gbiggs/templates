@@ -14,8 +14,8 @@
  */
 
 
-#ifndef RTC_H__
-#define RTC_H__
+#if !defined(RTC_H_)
+#define RTC_H_
 
 #include <rtm/Manager.h>
 #include <rtm/DataFlowComponentBase.h>
@@ -63,5 +63,5 @@ extern "C"
     DLL_EXPORT void rtc_init(RTC::Manager* manager);
 };
 
-#endif // RTC_H__
+#endif // !defined(RTC_H_)
 

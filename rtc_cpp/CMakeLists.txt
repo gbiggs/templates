@@ -11,9 +11,9 @@ DISSECT_VERSION()
 GET_OS_INFO()
 
 # Add an "uninstall" target
-CONFIGURE_FILE ("${PROJECT_SOURCE_DIR}/cmake/uninstall_target.cmake.in"
+configure_file("${PROJECT_SOURCE_DIR}/cmake/uninstall_target.cmake.in"
     "${PROJECT_BINARY_DIR}/uninstall_target.cmake" IMMEDIATE @ONLY)
-ADD_CUSTOM_TARGET (uninstall "${CMAKE_COMMAND}" -P
+add_custom_target(uninstall "${CMAKE_COMMAND}" -P
     "${PROJECT_BINARY_DIR}/uninstall_target.cmake")
 
 # Option to enable/disable rtdoc support
