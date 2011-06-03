@@ -56,9 +56,9 @@ recommended method of installation in Windows.
 \end{enumerate}
 
 The component can be launched by double-clicking the
-\verb|rtc<lib>_standalone| executable. The \verb|rtc<lib>| library
+\ilcode{rtc<lib>_standalone} executable. The \ilcode{rtc<lib>} library
 is available for loading into a manager, using the initialisation function
-\verb|rtc_init|.
+\ilcode{rtc_init}.
 
 \subsection{From source}
 
@@ -68,40 +68,40 @@ Follow these steps to install :
   \item Download the source, either from the repository or a source archive,
   and extract it somewhere.
 
-  \verb|tar -xvzf rtc.tar.gz|
+  \ilcode{tar -xvzf rtc.tar.gz}
   \item Change to the directory containing the extracted source.
 
-  \verb|cd rtc.0.0|
+  \ilcode{cd rtc.0.0}
   \item Create a directory called ``build'':
 
-  \verb|mkdir build|
+  \ilcode{mkdir build}
   \item Change to that directory.
 
-  \verb|cd build|
+  \ilcode{cd build}
   \item Run cmake or cmake-gui.
 
-  \verb|cmake ../|
+  \ilcode{cmake ../}
   \item If no errors occurred, run make.
 
-  \verb|make|
+  \ilcode{make}
   \item Finally, install the component. Ensure the necessary permissions to
   install into the chosen prefix are available.
 
-  \verb|make install|
+  \ilcode{make install}
   \item The install destination can be changed by executing ccmake and changing
-  the variable \verb|CMAKE_INSTALL_PREFIX|.
+  the variable \ilcode{CMAKE_INSTALL_PREFIX}.
 
-  \verb|ccmake ../|
+  \ilcode{ccmake ../}
 \end{enumerate}
 
 The component is now ready for use. See the next section for instructions on
 configuring the component.
 
 <COMP> can be launched in stand-alone mode by executing the
-\verb|rtc<lib>_standalone| executable (installed into \verb|${prefix}/bin|).
-Alternatively, \verb|librtc<lib>.so| can be loaded into a manager, using the
-initialisation function \verb|rtc_init|. This shared object can be found in
-\verb|${prefix}/lib| or \verb|${prefix}/lib64|.
+\ilcode{rtc<lib>_standalone} executable (installed into \ilcode{${prefix}/bin}).
+Alternatively, \ilcode{librtc<lib>.so} can be loaded into a manager, using the
+initialisation function \ilcode{rtc_init}. This shared object can be found in
+\ilcode{${prefix}/lib} or \ilcode{${prefix}/lib64}.
 
 
 \section{Configuration}
@@ -143,7 +143,7 @@ The ports provided by the component are described in Table~\ref{tab:ports}.
 \label{sec:examples}
 
 An example configuration file is provided in the
-\verb|${prefix}/share/rtc/examples/conf/| directory.
+\ilcode{${prefix}/share/rtc/examples/conf/} directory.
 
 % \section{Changelog}
 
