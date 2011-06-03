@@ -13,8 +13,8 @@
  * Service implementation class.
  */
 
-#if !defined(SERVICE_IMPL__)
-#define SERVICE_IMPL__
+#if !defined(SERVICE_IMPL_)
+#define SERVICE_IMPL_
 
 #include "idl/service.hh"
 
@@ -36,5 +36,5 @@ class <INTERFACE>Provider
 
 }; // namespace Services
 
-#endif // SERVICE_IMPL__
+#endif // !defined(SERVICE_IMPL_)
 
