@@ -1,77 +1,76 @@
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-project()
+project(RTC<component>)
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
-
-include(${PROJECT_SOURCE_DIR}/cmake/rtcomp_utils.cmake)
-
-# Set version and OS-specific settings
-set(RTC_VERSION 1.0.0 CACHE STRING "<COMP> version")
+include(${PROJECT_SOURCE_DIR}/cmake/utils.cmake)
+set(PROJECT_VERSION 1.0.0 CACHE STRING "RTC<component> version")
 DISSECT_VERSION()
-GET_OS_INFO()
+set(PROJECT_DESCRIPTION "RT-Component for ")
+set(PROJECT_VENDOR "AIST")
+set(PROJECT_AUTHOR "Geoffrey Biggs")
+set(PROJECT_AUTHOR_SHORT "gbiggs")
+set(PROJECT_COPYRIGHT_YEAR "2011")
 
 # Add an "uninstall" target
-configure_file("${PROJECT_SOURCE_DIR}/cmake/uninstall_target.cmake.in"
+CONFIGURE_FILE ("${PROJECT_SOURCE_DIR}/cmake/uninstall_target.cmake.in"
     "${PROJECT_BINARY_DIR}/uninstall_target.cmake" IMMEDIATE @ONLY)
-add_custom_target(uninstall "${CMAKE_COMMAND}" -P
+ADD_CUSTOM_TARGET (uninstall "${CMAKE_COMMAND}" -P
     "${PROJECT_BINARY_DIR}/uninstall_target.cmake")
 
-# Option to enable/disable rtdoc support
-option(RTDOC_SUPPORT
-    "Enable support for rtdoc. This will increase component size." ON)
-if(RTDOC_SUPPORT)
-    add_definitions("-DRTDOC_SUPPORT")
-endif(RTDOC_SUPPORT)
+option(BUILD_EXAMPLES "Build and install examples" ON)
+option(BUILD_DOCUMENTATION "Build the documentation" ON)
+option(BUILD_TESTS "Build the tests" ON)
+option(BUILD_TOOLS "Build the tools" ON)
 
-# Component source files
-set(comp_srcs comp/rtc.cpp
-              comp/service_impl.cpp)
-set(standalone_srcs comp/standalone.cpp)
-set(idls)
+option(STATIC_LIBS "Build static libraries" OFF)
+if(STATIC_LIBS)
+    set(LIB_TYPE STATIC)
+else(STATIC_LIBS)
+    set(LIB_TYPE SHARED)
+endif(STATIC_LIBS)
 
-# Compile the built-in IDL files
-COMPILE_IDL_FILES(${PROJECT_SOURCE_DIR}/idl ${idls})
-FILTER_LIST("${_idl_srcs}" "hh$" _installable_idl_srcs)
-install(FILES ${_installable_idl_srcs}
-    DESTINATION ${RTC_INCLUDE_INSTALL_DIR}/idl COMPONENT headers)
-INSTALL_IDL_FILES(${PROJECT_SOURCE_DIR}/idl ${RTC_INCLUDE_INSTALL_DIR}/idl
-    ${idls})
+# Set up installation directories
+set(BIN_INSTALL_DIR "bin")
+set(LIB_INSTALL_DIR "lib")
+set(INC_INSTALL_DIR
+    "include/${PROJECT_NAME_LOWER}-${PROJECT_VERSION_MAJOR}")
+set(SHARE_INSTALL_DIR
+    "share/${PROJECT_NAME_LOWER}-${PROJECT_VERSION_MAJOR}")
 
 # Get necessary dependency information
-GET_PKG_CONFIG_INFO(openrtm-aist REQUIRED)
+if(NOT WIN32)
+    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules)
+endif(NOT WIN32)
+find_package(OpenRTM 1 REQUIRED)
 
-# Set include and link directories and flags
-include_directories(${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
-APPLY_PKG_CONFIG_DIRS(openrtm-aist)
-APPLY_PKG_CONFIG_TO_SRCS(openrtm-aist ${comp_srcs} ${proxy_srcs})
-
-# Component target
-add_library(${PROJECT_NAME_LOWER} SHARED
-    ${comp_srcs} ${proxy_srcs} ${_idl_srcs})
-add_executable(${PROJECT_NAME_LOWER}_standalone ${standalone_srcs})
-
-target_link_libraries(${PROJECT_NAME_LOWER}_standalone ${PROJECT_NAME_LOWER})
-APPLY_PKG_CONFIG_TO_TGTS(openrtm-aist ${PROJECT_NAME_LOWER})
-
-install(TARGETS ${PROJECT_NAME_LOWER} LIBRARY DESTINATION
-    ${RTC_LIB_INSTALL_DIR} COMPONENT component)
-install(TARGETS ${PROJECT_NAME_LOWER}_standalone RUNTIME DESTINATION bin
-    COMPONENT component)
+# Universal settings
+enable_testing()
 
 # Subdirectories
 add_subdirectory(cmake)
-add_subdirectory(comp)
-add_subdirectory(doc)
-add_subdirectory(examples)
+if(BUILD_DOCUMENTATION)
+    add_subdirectory(doc)
+endif(BUILD_DOCUMENTATION)
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif(BUILD_EXAMPLES)
 add_subdirectory(idl)
+add_subdirectory(include)
+add_subdirectory(src)
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif(BUILD_TESTS)
+if(BUILD_TOOLS)
+    add_subdirectory(tools)
+endif(BUILD_TOOLS)
 
 # Package creation
 include(InstallRequiredSystemLibraries)
-set(RTC_DESCRIPTION "RT-Component for .")
-set(RTC_VENDOR "Geoffrey Biggs, AIST")
-set(RTC_EXECUTABLES "${PROJECT_NAME_LOWER}_standalone" "RTC:")
+set(PROJECT_EXECUTABLES ${PROJECT_NAME_LOWER}_standalone
+    "RTC:<component>_standalone")
+set(cpack_options "${PROJECT_BINARY_DIR}/cpack_options.cmake")
 configure_file("${PROJECT_SOURCE_DIR}/cmake/cpack_options.cmake.in"
-    "${PROJECT_BINARY_DIR}/cpack_options.cmake" @ONLY)
-set(CPACK_PROJECT_CONFIG_FILE "${PROJECT_BINARY_DIR}/cpack_options.cmake")
+    ${cpack_options} @ONLY)
+set(CPACK_PROJECT_CONFIG_FILE ${cpack_options})
 include(CPack)
 

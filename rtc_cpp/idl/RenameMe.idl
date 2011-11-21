@@ -1,4 +1,4 @@
-/* RTC:
+/* RTC<component>
  *
  * Copyright (C) 2011
  *     Geoffrey Biggs
@@ -10,25 +10,19 @@
  * Licensed under the Eclipse Public License -v 1.0 (EPL)
  * http://www.opensource.org/licenses/eclipse-1.0.txt
  *
- * Component service ports IDL.
+ * The ??? interface.
  */
 
 
-#ifndef SERVICES_IDL__
-#define SERVICES_IDL__
+#ifndef <interface>_IDL_
+#define <interface>_IDL_
 
-#include "ExtendedDataTypes.idl"
-#include "InterfaceDataTypes.idl"
-
-module RTC
+module <module>
 {
+    interface <interface>
+    {
+    };
+}; // module <module>
 
-interface <INTERFACE>
-{
-    <RESULT_TYPE> <METHOD>();
-};
-
-}; // module RTC
-
-#endif // SERVICES_IDL__
+#endif // <interface>_IDL_
 

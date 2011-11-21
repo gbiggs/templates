@@ -1,0 +1,8 @@
+configuration.active_config: default
+
+conf.default.:
+
+conf.__widget__.: text or spin or radio
+
+conf.__constraints__.: 0<=x<=1
+

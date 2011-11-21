@@ -1,6 +1,6 @@
-/* RTC:
+/* RTC:HokuyoAist
  *
- * Copyright (C) 2011
+ * Copyright (C) 2009-2010
  *     Geoffrey Biggs
  *     RT-Synthesis Research Group
  *     Intelligent Systems Research Institute,
@@ -14,22 +14,22 @@
  */
 
 
+#include <rtchokuyoaist/rtc.h>
+
 #include <iostream>
 #include <rtm/Manager.h>
 #include <string>
 #include <stdlib.h>
 
-#include "rtc.h"
-
 void ModuleInit(RTC::Manager* manager)
 {
     rtc_init(manager);
     RTC::RtcBase* comp;
-    comp = manager->createComponent("<COMP>");
+    comp = manager->createComponent("RTCHokuyoAIST");
 
     if (comp == NULL)
     {
-        std::cerr << "<COMP> component creation failed." << std::endl;
+        std::cerr << "RTCHokuyoAIST component creation failed." << std::endl;
         abort();
     }
 }
