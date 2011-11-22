@@ -16,7 +16,7 @@ configure_file("test_consts.h.in" ${test_consts})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(all_tests ${srcs} ${test_consts})
-target_link_libraries(all_tests tide ${Boost_LIBRARIES} ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(all_tests ${PROJECT_NAME_LOWER} ${GTEST_BOTH_LIBRARIES})
 if(CMAKE_VERSION VERSION_LESS 2.8.4)
     add_test(AllTests all_tests)
 else(CMAKE_VERSION VERSION_LESS 2.8.4)
